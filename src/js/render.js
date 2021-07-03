@@ -1,12 +1,8 @@
-// import form from '../templates/gallery-images-form.hbs';
+import API from '../service/fetch';
 import refs from './refs';
-const KEY = '20731826-485a6ef4f9f6fa0c1feddacae';
+import imagesTpl from '../templates/gallery-card.hbs';
 
-// const images = '';
-const BASE_URL = 'https://pixabay.com/api';
-const page = 1;
-
-// function fetchImages() {}
+// console.log(imagesTpl);
 
 refs.searchForm.addEventListener('submit', onSearchImages);
 
@@ -14,8 +10,12 @@ function onSearchImages(e) {
   e.preventDefault();
   const serchQuery = e.currentTarget.elements.query.value;
 
-  console.log(serchQuery);
+  //   console.log(serchQuery);
+  API.fetchImages(serchQuery)
+    .then(renderImages)
+    .catch(error => console.log(error.message));
+}
 
-  const url = `${BASE_URL}/?image_type=photo&orientation=horizontal&q=${serchQuery}&page=${page}&per_page=12&key=${KEY}`;
-  fetch();
+function renderImages(images) {
+  refs.gallery.insertAdjacentHTML('beforeEnd', imagesTpl(images));
 }

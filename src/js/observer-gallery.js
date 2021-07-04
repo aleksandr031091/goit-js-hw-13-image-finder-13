@@ -1,3 +1,6 @@
+// import API from '../service/fetch';
+// import serchQuery from './render';
+
 // const options = {
 //   rootMargin: '50px',
 //   threshold: 0.5,

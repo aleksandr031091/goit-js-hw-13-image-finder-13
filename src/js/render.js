@@ -9,7 +9,6 @@ import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
 import { error } from '@pnotify/core/dist/PNotify.js';
 
-// console.log(imagesTpl);
 function renderImages(page) {
   refs.gallery.insertAdjacentHTML('beforeEnd', imagesTpl(page));
 }
@@ -24,24 +23,24 @@ function onSubmit(e) {
   e.preventDefault();
   clearGallery();
   serchQuery = e.currentTarget.elements.query.value;
-
+  //   emptyQuery(serchQuery);
   if (serchQuery === '' || serchQuery === ' ') {
     return error({ text: 'Please enter a value to search' });
   }
   onSearchImages();
 }
+// function emptyQuery(value) {
+//   if (value === '' || value === ' ') {
+//     return error({ text: 'Please enter a value to search' });
+//   }
+// }
 
 function onSearchImages() {
   API.fetchImages(serchQuery, page).then(data => {
     clearGallery();
     renderImages(data);
     invalidQuery(data.hits);
-    console.log(data.hits);
-    // if (data.hits < 1) {
-    //   return error({ text: 'Sorry for your request no matches' });
-    // }
   });
-  // .catch(err => error({ text: err.message }));
 }
 
 function clearGallery() {
@@ -65,19 +64,15 @@ const onEntry = entries => {
     if (!entry.isIntersecting || serchQuery === '') {
       return;
     }
-    // console.log(serchQuery);
-    API.fetchImages(serchQuery, page).then(data => {
-      //   console.log(serchQuery);
-      //   console.log(data);
 
+    API.fetchImages(serchQuery, page).then(data => {
       page += 1;
       renderImages(data);
-      //   console.log(data.hits);
     });
-    // console.log(entry);
   });
 };
 
 const observer = new IntersectionObserver(onEntry, options);
 
 observer.observe(refs.intObserver);
+// export default serchQuery;

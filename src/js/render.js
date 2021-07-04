@@ -1,7 +1,9 @@
 import API from '../service/fetch';
 import refs from './refs';
+// import observer from './observer-gallery';
 
 import imagesTpl from '../templates/gallery-card.hbs';
+import onClickImage from './modal';
 
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
@@ -16,6 +18,7 @@ let serchQuery = '';
 let page = 1;
 
 refs.searchForm.addEventListener('submit', onSubmit);
+refs.gallery.addEventListener('click', onClickImage);
 
 function onSubmit(e) {
   e.preventDefault();
@@ -33,6 +36,7 @@ function onSearchImages() {
     clearGallery();
     renderImages(data);
     invalidQuery(data.hits);
+    console.log(data.hits);
     // if (data.hits < 1) {
     //   return error({ text: 'Sorry for your request no matches' });
     // }

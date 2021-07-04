@@ -1,8 +1,16 @@
 import API from '../service/fetch';
 import refs from './refs';
+
 import imagesTpl from '../templates/gallery-card.hbs';
 
+import '@pnotify/core/dist/PNotify.css';
+import '@pnotify/core/dist/BrightTheme.css';
+import { error } from '@pnotify/core/dist/PNotify.js';
+
 // console.log(imagesTpl);
+function renderImages(page) {
+  refs.gallery.insertAdjacentHTML('beforeEnd', imagesTpl(page));
+}
 
 let serchQuery = '';
 let page = 1;
@@ -11,24 +19,35 @@ refs.searchForm.addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
   e.preventDefault();
-
+  clearGallery();
   serchQuery = e.currentTarget.elements.query.value;
 
+  if (serchQuery === '' || serchQuery === ' ') {
+    return error({ text: 'Please enter a value to search' });
+  }
   onSearchImages();
 }
 
 function onSearchImages() {
-  //   page += 1;
-  API.fetchImages(serchQuery, page)
-    .then(data => {
-      refs.gallery.innerHTML = '';
-      renderImages(data);
-    })
-    .catch(error => console.log(error.message));
+  API.fetchImages(serchQuery, page).then(data => {
+    clearGallery();
+    renderImages(data);
+    invalidQuery(data.hits);
+    // if (data.hits < 1) {
+    //   return error({ text: 'Sorry for your request no matches' });
+    // }
+  });
+  // .catch(err => error({ text: err.message }));
 }
 
-function renderImages(page) {
-  refs.gallery.insertAdjacentHTML('beforeEnd', imagesTpl(page));
+function clearGallery() {
+  refs.gallery.innerHTML = '';
+}
+
+function invalidQuery(arr) {
+  if (arr.length < 1) {
+    return error({ text: 'Sorry for your request no matches' });
+  }
 }
 
 const options = {

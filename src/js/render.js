@@ -4,18 +4,57 @@ import imagesTpl from '../templates/gallery-card.hbs';
 
 // console.log(imagesTpl);
 
-refs.searchForm.addEventListener('submit', onSearchImages);
+let serchQuery = '';
+let page = 1;
 
-function onSearchImages(e) {
+refs.searchForm.addEventListener('submit', onSubmit);
+
+function onSubmit(e) {
   e.preventDefault();
-  const serchQuery = e.currentTarget.elements.query.value;
 
-  //   console.log(serchQuery);
-  API.fetchImages(serchQuery)
-    .then(renderImages)
+  serchQuery = e.currentTarget.elements.query.value;
+
+  onSearchImages();
+}
+
+function onSearchImages() {
+  //   page += 1;
+  API.fetchImages(serchQuery, page)
+    .then(data => {
+      refs.gallery.innerHTML = '';
+      renderImages(data);
+    })
     .catch(error => console.log(error.message));
 }
 
-function renderImages(images) {
-  refs.gallery.insertAdjacentHTML('beforeEnd', imagesTpl(images));
+function renderImages(page) {
+  refs.gallery.insertAdjacentHTML('beforeEnd', imagesTpl(page));
 }
+
+const options = {
+  rootMargin: '50px',
+  threshold: 0.5,
+};
+
+const onEntry = entries => {
+  entries.forEach(entry => {
+    // тут можно писать логику для проверки вхождения
+    if (!entry.isIntersecting || serchQuery === '') {
+      return;
+    }
+    // console.log(serchQuery);
+    API.fetchImages(serchQuery, page).then(data => {
+      //   console.log(serchQuery);
+      //   console.log(data);
+
+      page += 1;
+      renderImages(data);
+      //   console.log(data.hits);
+    });
+    // console.log(entry);
+  });
+};
+
+const observer = new IntersectionObserver(onEntry, options);
+
+observer.observe(refs.intObserver);

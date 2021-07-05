@@ -22,6 +22,7 @@ refs.gallery.addEventListener('click', onClickImage);
 function onSubmit(e) {
   e.preventDefault();
   clearGallery();
+
   serchQuery = e.currentTarget.elements.query.value;
   //   emptyQuery(serchQuery);
   if (serchQuery === '' || serchQuery === ' ') {
@@ -36,10 +37,12 @@ function onSubmit(e) {
 // }
 
 function onSearchImages() {
-  API.fetchImages(serchQuery, page).then(data => {
+  API.fetchImages(serchQuery).then(data => {
     clearGallery();
     renderImages(data);
     invalidQuery(data.hits);
+
+    page += 1;
   });
 }
 
@@ -53,26 +56,27 @@ function invalidQuery(arr) {
   }
 }
 
-const options = {
-  rootMargin: '50px',
-  threshold: 0.5,
-};
-
 const onEntry = entries => {
   entries.forEach(entry => {
-    // тут можно писать логику для проверки вхождения
     if (!entry.isIntersecting || serchQuery === '') {
       return;
     }
 
     API.fetchImages(serchQuery, page).then(data => {
-      page += 1;
       renderImages(data);
+
+      page += 1;
     });
   });
 };
 
-const observer = new IntersectionObserver(onEntry, options);
+const observer = new IntersectionObserver(onEntry);
 
 observer.observe(refs.intObserver);
 // export default serchQuery;
+
+// решить вопрос с проверкой в сабмите
+// перенести обсервер
+// добавить стили возможно на гридах
+// добавить кнопку вверх
+//убрать ошибку при npm ci

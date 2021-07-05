@@ -1,30 +1,19 @@
 // import API from '../service/fetch';
-// import serchQuery from './render';
-
-// const options = {
-//   rootMargin: '50px',
-//   threshold: 0.5,
-// };
+// import { page, serchQuery } from './render';
 
 // const onEntry = entries => {
 //   entries.forEach(entry => {
-//     // тут можно писать логику для проверки вхождения
 //     if (!entry.isIntersecting || serchQuery === '') {
 //       return;
 //     }
-//     // console.log(serchQuery);
-//     API.fetchImages(serchQuery, page).then(data => {
-//       //   console.log(serchQuery);
-//       //   console.log(data);
 
+//     API.fetchImages(page).then(data => {
 //       page += 1;
 //       renderImages(data);
-//       //   console.log(data.hits);
 //     });
-//     // console.log(entry);
 //   });
 // };
 
-// const observer = new IntersectionObserver(onEntry, options);
+// const observer = new IntersectionObserver(onEntry);
 
 // export default observer;

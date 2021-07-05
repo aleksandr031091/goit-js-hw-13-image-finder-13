@@ -6,9 +6,9 @@ function onClickImage(e) {
     return;
   }
 
-  const instance = basicLightbox.create(`
-    <img src="${e.target.dataset.sourse}" alt="${e.target.alt}" width="800" height="600">
-`);
+  const instance = basicLightbox.create(
+    `<img src="${e.target.dataset.sourse}" alt="${e.target.alt}" width="800" height="600">`,
+  );
 
   instance.show();
 }

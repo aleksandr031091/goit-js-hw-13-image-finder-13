@@ -7,17 +7,23 @@
     <title>Document</title>
   </head>
   <body>
+    <form class="search-form" id="search-form">
+      <input
+        class="input-serch"
+        type="text"
+        name="query"
+        autocomplete="off"
+        placeholder="Search images..."
+      />
+      <button class="button-submit" type="submit">🔍</button>
+    </form>
     <div class="gallery-container">
-      <form class="search-form" id="search-form">
-        <input type="text" name="query" autocomplete="off" placeholder="Search images..." />
-        <button type="submit">Serch</button>
-      </form>
-
       <ul class="gallery" id="gallery-js">
         <!-- Список <li> с карточками изображений -->
       </ul>
       <div id="IntersectionObserver"></div>
     </div>
+    <a class="back_to_top" id="back-to-top-js" title="to top">⬆</a>
     <script src="./index.js"></script>
   </body>
 </html>

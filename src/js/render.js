@@ -1,9 +1,8 @@
 import API from '../service/fetch';
 import refs from './refs';
-// import observer from './observer-gallery';
+import onClickImage from './modal';
 
 import imagesTpl from '../templates/gallery-card.hbs';
-import onClickImage from './modal';
 
 import '@pnotify/core/dist/PNotify.css';
 import '@pnotify/core/dist/BrightTheme.css';
@@ -22,25 +21,14 @@ refs.gallery.addEventListener('click', onClickImage);
 function onSubmit(e) {
   e.preventDefault();
   clearGallery();
-
-  serchQuery = e.currentTarget.elements.query.value;
-  //   emptyQuery(serchQuery);
-  if (serchQuery === '' || serchQuery === ' ') {
-    return error({ text: 'Please enter a value to search' });
-  }
+  serchQuery = e.currentTarget.elements.query.value.trim();
   onSearchImages();
 }
-// function emptyQuery(value) {
-//   if (value === '' || value === ' ') {
-//     return error({ text: 'Please enter a value to search' });
-//   }
-// }
 
 function onSearchImages() {
   API.fetchImages(serchQuery).then(data => {
-    clearGallery();
     renderImages(data);
-    invalidQuery(data.hits);
+    invalidsearchQuery(data.hits);
 
     page += 1;
   });
@@ -50,7 +38,7 @@ function clearGallery() {
   refs.gallery.innerHTML = '';
 }
 
-function invalidQuery(arr) {
+function invalidsearchQuery(arr) {
   if (arr.length < 1) {
     return error({ text: 'Sorry for your request no matches' });
   }
@@ -73,10 +61,5 @@ const onEntry = entries => {
 const observer = new IntersectionObserver(onEntry);
 
 observer.observe(refs.intObserver);
-// export default serchQuery;
 
-// решить вопрос с проверкой в сабмите
-// перенести обсервер
-// добавить стили возможно на гридах
-// добавить кнопку вверх
 //убрать ошибку при npm ci

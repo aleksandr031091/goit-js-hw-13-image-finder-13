@@ -39,7 +39,7 @@ function clearGallery() {
 }
 
 function invalidsearchQuery(arr) {
-  if (arr.length < 1) {
+  if (!arr.length) {
     return error({ text: 'Sorry for your request no matches' });
   }
 }

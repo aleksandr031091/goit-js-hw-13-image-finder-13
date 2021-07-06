@@ -44,29 +44,30 @@ p {
   :focus {
     outline: none;
   }
+}
 
-  .input-serch {
-    padding-left: 30px;
-    width: 500px;
-    height: 40px;
+.input-serch {
+  padding-left: 30px;
+  width: 500px;
+  height: 40px;
 
-    color: #ffffff;
-    // background-color: transparent;
-    background-color: rgba(129, 129, 129, 0.089);
-    border-radius: 5px;
-    border: 1px solid rgba(27, 255, 244, 0.651);
-  }
-  .input-serch::placeholder {
-    color: #ffffff;
-  }
+  color: #ffffff;
+  // background-color: transparent;
+  background-color: rgba(129, 129, 129, 0.089);
+  border-radius: 5px;
+  border: 1px solid rgba(27, 255, 244, 0.651);
+}
 
-  .button-submit {
-    position: relative;
-    left: -500px;
-    font-size: 20px;
-    background-color: transparent;
-    border: none;
-  }
+.input-serch::placeholder {
+  color: #ffffff;
+}
+
+.button-submit {
+  position: relative;
+  left: -500px;
+  font-size: 20px;
+  background-color: transparent;
+  border: none;
 }
 
 .gallery-container {
@@ -80,32 +81,47 @@ p {
   flex-wrap: wrap;
   margin-top: -15px;
   margin-left: -15px;
+}
+.image-gallery {
+}
+.item-gallery {
+  margin-top: 15px;
+  margin-left: 15px;
+  width: calc((100% / 4) - 15px);
 
-  .item-gallery {
-    margin-top: 15px;
-    margin-left: 15px;
-    width: calc((100% / 4) - 15px);
+  background: #ffffff;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
 
-    background: #ffffff;
-    border-radius: 10px;
-    overflow: hidden;
-    cursor: pointer;
-  }
-  // .item-gallery:hover {
-  //   transform: scale(0, 1);
-  // }
+  transform: 1s;
 
-  .stats {
-    display: flex;
-    justify-content: space-between;
-    padding: 10px;
-    width: 100%;
-
-    font-weight: bold;
-    color: rgb(0, 0, 0);
-    background: linear-gradient(#bdbdbd, #ffffff);
+  &:hover,
+  &:focus {
+    transform: scale(1.05);
   }
 }
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+
+  font-weight: bold;
+  color: rgb(0, 0, 0);
+  background: linear-gradient(#bdbdbd, #ffffff);
+}
+
+.stats-item {
+  display: flex;
+  align-items: center;
+}
+
+.material-icons {
+  margin-right: 5px;
+}
+
 .back_to_top {
   position: fixed;
   bottom: 80px;

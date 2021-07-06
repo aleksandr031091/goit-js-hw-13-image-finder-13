@@ -20,16 +20,16 @@ refs.gallery.addEventListener('click', onClickImage);
 
 function onSubmit(e) {
   serchQuery = e.currentTarget.elements.query.value.trim();
+  page = 1;
   e.preventDefault();
   clearGallery();
   onSearchImages();
 }
 
 function onSearchImages() {
-  API.fetchImages(serchQuery).then(data => {
+  API.fetchImages(serchQuery, page).then(data => {
     renderImages(data);
     invalidsearchQuery(data.hits);
-
     page += 1;
   });
 }
@@ -61,5 +61,3 @@ const onEntry = entries => {
 const observer = new IntersectionObserver(onEntry);
 
 observer.observe(refs.intObserver);
-
-//убрать ошибку при npm ci

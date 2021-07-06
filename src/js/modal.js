@@ -1,7 +1,9 @@
 import * as basicLightbox from 'basiclightbox';
 import 'basiclightbox/dist/basicLightbox.min.css';
+import refs from './refs';
 
 function onClickImage(e) {
+  refs.backToTop.classList.remove('back_to_top-show');
   if (e.target === e.currentTarget) {
     return;
   }

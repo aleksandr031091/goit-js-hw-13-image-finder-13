@@ -19,9 +19,9 @@ refs.searchForm.addEventListener('submit', onSubmit);
 refs.gallery.addEventListener('click', onClickImage);
 
 function onSubmit(e) {
+  serchQuery = e.currentTarget.elements.query.value.trim();
   e.preventDefault();
   clearGallery();
-  serchQuery = e.currentTarget.elements.query.value.trim();
   onSearchImages();
 }
 

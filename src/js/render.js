@@ -14,14 +14,15 @@ function renderImages(page) {
 
 let serchQuery = '';
 let page = 1;
+let lastPage = null;
 
 refs.searchForm.addEventListener('submit', onSubmit);
 refs.gallery.addEventListener('click', onClickImage);
 
 function onSubmit(e) {
+  e.preventDefault();
   serchQuery = e.currentTarget.elements.query.value.trim();
   page = 1;
-  e.preventDefault();
   clearGallery();
   onSearchImages();
 }
@@ -30,7 +31,7 @@ function onSearchImages() {
   API.fetchImages(serchQuery, page).then(data => {
     renderImages(data);
     invalidsearchQuery(data.hits);
-    page += 1;
+    lastPage = Math.ceil(data.totalHits / 12);
   });
 }
 
@@ -39,7 +40,7 @@ function clearGallery() {
 }
 
 function invalidsearchQuery(arr) {
-  if (!arr.length) {
+  if (!arr.length && page === 1) {
     return error({ text: 'Sorry for your request no matches' });
   }
 }
@@ -50,12 +51,14 @@ const onEntry = entries => {
       return;
     }
 
-    API.fetchImages(serchQuery, page).then(data => {
-      renderImages(data);
+    page += 1;
 
-      page += 1;
-    });
+    onSearchImages();
   });
+
+  if (page === lastPage) {
+    observer.disconnect();
+  }
 };
 
 const observer = new IntersectionObserver(onEntry);
